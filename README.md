@@ -23,6 +23,7 @@ I went with Tauri (Rust + React) because I wanted something fast and native-feel
 - **Backend**: Rust with Tauri (cross-platform and performant)
 - **Database**: SQLite (simple, local, no cloud nonsense)
 - **Monitoring**: Cross-platform process detection
+- **Testing**: Vitest + React Testing Library (comprehensive test coverage)
 
 ## Project Structure
 
@@ -43,6 +44,17 @@ gaming-time-tracker/
 │   │   └── SettingsPanel.tsx (planned)
 │   ├── App.tsx              # Root React component
 │   └── main.tsx             # React entry point
+├── tests/                   # Testing suite
+│   ├── mocks/
+│   │   └── tauri.ts         # Tauri API mocks for testing
+│   ├── components/
+│   │   └── Dashboard.test.tsx # Component unit tests
+│   ├── integration/
+│   │   ├── App.test.tsx     # App integration tests
+│   │   ├── utils.test.ts    # Utility function tests
+│   │   ├── integration.test.tsx # Full integration tests
+│   │   └── e2e.test.tsx     # End-to-end tests
+│   └── setup.ts             # Test configuration
 ├── package.json             # Node.js dependencies
 └── vite.config.ts          # Vite configuration
 ```
@@ -76,8 +88,10 @@ Encourages productive habits by offering gaming time rewards:
 - Game monitoring and session tracking (the core stuff)
 - SQLite database that handles all the data
 - Budget calculations with the rollover logic
+- Learning activity tracking and rewards
 - React dashboard that updates in real-time
 - Smart handling of multiple games running at once
+- Comprehensive test suite with unit, integration, and e2e tests
 
 ### 🚧 Still Working On
 - Learning activity tracking and rewards
@@ -110,6 +124,24 @@ cd src-tauri && cargo build
 
 # Run it in dev mode
 npm run tauri dev
+```
+
+### Running Tests
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run specific test files
+npm test Dashboard.test.tsx
+
+# Run integration tests
+npm test integration/
+
+# Run e2e tests
+npm test e2e.test.tsx
 ```
 
 ### To Build for Real
