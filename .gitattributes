@@ -1,2 +1,162 @@
+<<<<<<< HEAD
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.rs text
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+*.json text
+*.md text
+*.toml text
+*.yml text
+*.yaml text
+*.html text
+*.css text
+*.scss text
+*.sass text
+*.less text
+*.xml text
+*.svg text
+
+# Declare files that will always have CRLF line endings on checkout.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Declare files that will always have LF line endings on checkout.
+*.sh text eol=lf
+Makefile text eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.eot binary
+*.woff binary
+*.woff2 binary
+*.pyc binary
+*.pdf binary
+*.ez binary
+*.bz2 binary
+*.swp binary
+*.dmp binary
+*.so binary
+*.dylib binary
+*.dll binary
+*.exe binary
+*.app binary
+*.deb binary
+*.dmg binary
+*.iso binary
+*.jar binary
+
+# Language detection for GitHub
+*.rs linguist-language=Rust
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript
+*.toml linguist-language=TOML
+
+# Mark generated files
+src-tauri/target/** linguist-generated=true
+dist/** linguist-generated=true
+dist-ssr/** linguist-generated=true
+node_modules/** linguist-generated=true
+
+# Documentation
+=======
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.rs text
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+*.json text
+*.md text
+*.toml text
+*.yml text
+*.yaml text
+*.html text
+*.css text
+*.scss text
+*.sass text
+*.less text
+*.xml text
+*.svg text
+
+# Declare files that will always have CRLF line endings on checkout.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Declare files that will always have LF line endings on checkout.
+*.sh text eol=lf
+Makefile text eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.eot binary
+*.woff binary
+*.woff2 binary
+*.pyc binary
+*.pdf binary
+*.ez binary
+*.bz2 binary
+*.swp binary
+*.dmp binary
+*.so binary
+*.dylib binary
+*.dll binary
+*.exe binary
+*.app binary
+*.deb binary
+*.dmg binary
+*.iso binary
+*.jar binary
+
+# Language detection for GitHub
+*.rs linguist-language=Rust
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript
+*.toml linguist-language=TOML
+
+# Mark generated files
+src-tauri/target/** linguist-generated=true
+dist/** linguist-generated=true
+dist-ssr/** linguist-generated=true
+node_modules/** linguist-generated=true
+
+# Documentation
+>>>>>>> origin/main
+*.md linguist-documentation=true
