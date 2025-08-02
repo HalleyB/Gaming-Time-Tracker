@@ -40,8 +40,8 @@ const Dashboard: React.FC<DashboardProps> = ({
 }) => {
   const [showBudgetTime, setShowBudgetTime] = useState(true);
   const getCurrentSessionDuration = () => {
-    if (!currentSession) return 0;
-    const start = new Date(currentSession.start_time).getTime();
+    if (!activeSessions || activeSessions && activeSessions.length === 0) return 0;
+    const start = new Date(activeSessions[0].start_time).getTime();
     const now = Date.now();
     return Math.floor((now - start) / 1000);
   };
@@ -50,16 +50,25 @@ const Dashboard: React.FC<DashboardProps> = ({
   const isLowBudget = budgetStatus && budgetStatus.remaining_today_minutes <= 5 && budgetStatus.remaining_today_minutes > 0;
 
   const getTodaysSessions = () => {
+    if (!recentSessions || !Array.isArray(recentSessions)) {
+      return [];
+    }
     const today = new Date().toDateString();
     return recentSessions.filter(session =>
-      new Date(session.start_time).toDateString() === today
+      new Date(session?.start_time ?? '').toDateString() === today
     );
   };
 
   const getWeeklyTotal = () => {
+    if (!recentSessions || !Array.isArray(recentSessions)) {
+      return 0;
+    }
+
     const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     const weekSessions = recentSessions.filter(session =>
-      new Date(session.start_time) >= oneWeekAgo && session.duration_seconds
+      session?.start_time &&
+      new Date(session.start_time) >= oneWeekAgo &&
+      session.duration_seconds
     );
 
     if (showBudgetTime) {
@@ -79,7 +88,7 @@ const Dashboard: React.FC<DashboardProps> = ({
       .filter(session => session.end_time)
       .map(session => ({
         start: new Date(session.start_time),
-        end: new Date(session.end_time!),
+        end: new Date(session.end_time ?? ''),
       }))
       .sort((a, b) => a.start.getTime() - b.start.getTime());
 
@@ -87,12 +96,8 @@ const Dashboard: React.FC<DashboardProps> = ({
     let currentEnd: Date | null = null;
 
     for (const period of periods) {
-      if (!currentEnd) {
-        // First period
-        totalSeconds += (period.end.getTime() - period.start.getTime()) / 1000;
-        currentEnd = period.end;
-      } else if (period.start >= currentEnd) {
-        // No overlap, add full duration
+      if (!currentEnd || period.start >= currentEnd) {
+        // First period or no overlap, add full duration
         totalSeconds += (period.end.getTime() - period.start.getTime()) / 1000;
         currentEnd = period.end;
       } else if (period.end > currentEnd) {
@@ -119,7 +124,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             <h3 className="text-sm font-medium text-gray-400">Current Session</h3>
             <Clock className="w-5 h-5 text-purple-400" />
           </div>
-          {activeSessions.length > 0 ? (
+          {activeSessions && activeSessions.length > 0 ? (
             <div>
               <p className="text-2xl font-bold text-white mb-1">
                 {formatDuration(totalActiveTime)}
@@ -164,12 +169,19 @@ const Dashboard: React.FC<DashboardProps> = ({
           </div>
           {budgetStatus ? (
             <div>
-              <p className={`text-2xl font-bold mb-1 ${isOverBudget ? 'text-red-400' :
-                isLowBudget ? 'text-orange-400' :
-                  'text-white'
-                }`}>
-                {budgetStatus.remaining_today_minutes}m
-              </p>
+              {(() => {
+                let budgetClass = 'text-white';
+                if (isOverBudget) {
+                  budgetClass = 'text-red-400';
+                } else if (isLowBudget) {
+                  budgetClass = 'text-orange-400';
+                }
+                return (
+                  <p className={`text-2xl font-bold mb-1 ${budgetClass}`}>
+                    {budgetStatus.remaining_today_minutes}m
+                  </p>
+                );
+              })()}
               <p className="text-sm text-gray-400">
                 of {budgetStatus.total_available_minutes}m total
               </p>
@@ -228,7 +240,7 @@ const Dashboard: React.FC<DashboardProps> = ({
       </div>
 
       {/* Active Sessions Details */}
-      {activeSessions.length > 1 && (
+      {activeSessions && activeSessions.length > 1 && (
         <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
           <h3 className="text-lg font-semibold text-white mb-4">
             Active Sessions ({activeSessions.length} concurrent)
@@ -293,39 +305,37 @@ const Dashboard: React.FC<DashboardProps> = ({
       {/* Recent Sessions */}
       <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
         <h3 className="text-lg font-semibold text-white mb-4">Recent Sessions</h3>
-        {recentSessions.length > 0 ? (
+        {recentSessions && recentSessions.length > 0 ? (
           <div className="space-y-3">
             {recentSessions.slice(0, 5).map((session, index) => (
-              <div key={session.id || index} className="flex items-center justify-between py-3 border-b border-gray-700 last:border-b-0">
+              <div key={session?.id || index} className="flex items-center justify-between py-3 border-b border-gray-700 last:border-b-0">
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
                   <div>
-                    <p className="text-white font-medium">{session.game_name}</p>
+                    <p className="text-white font-medium">{session?.game_name || 'Unknown Game'}</p>
                     <p className="text-sm text-gray-400">
-                      {format(new Date(session.start_time), 'MMM d, h:mm a')}
+                      {session?.start_time ? format(new Date(session.start_time), 'MMM d, h:mm a') : 'Unknown time'}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
                   <p className="text-white font-medium">
-                    {session.duration_seconds ? formatDuration(session.duration_seconds) : 'In progress'}
+                    {session?.duration_seconds ? formatDuration(session.duration_seconds) : '--'}
                   </p>
-                  <div className="flex items-center space-x-2">
-                    {session.is_social_session && (
-                      <span className="text-xs text-blue-400">Social</span>
-                    )}
-                    {session.is_concurrent && (
-                      <span className="text-xs text-purple-400">Concurrent</span>
-                    )}
-                  </div>
+                  {session?.is_social_session && (
+                    <span className="text-xs bg-green-600 text-white px-2 py-1 rounded">
+                      Social
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
           </div>
         ) : (
           <div className="text-center py-8">
-            <Clock className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-            <p className="text-gray-400">No gaming sessions recorded yet</p>
+            <Calendar className="w-12 h-12 text-gray-600 mx-auto mb-3" />
+            <p className="text-gray-500">No gaming sessions recorded yet</p>
+            <p className="text-sm text-gray-600 mt-1">Start a game and your sessions will appear here</p>
           </div>
         )}
       </div>

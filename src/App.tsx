@@ -327,10 +327,10 @@ function App() {
 
   // Check for warnings when budget changes
   useEffect(() => {
-    if (budgetStatus && activeSessions.length > 0) {
+    if (budgetStatus && activeSessions && activeSessions.length > 0) {
       checkWarnings(budgetStatus);
     }
-  }, [budgetStatus, activeSessions.length]);
+  }, [budgetStatus, activeSessions]);
 
   // Initial data fetch and periodic updates
   useEffect(() => {
@@ -537,7 +537,7 @@ function App() {
 
           <div className="flex items-center space-x-4">
             {/* Current Session Indicator */}
-            {activeSessions.length > 0 && (
+            {activeSessions && activeSessions.length > 0 && (
               <div className="flex items-center space-x-2 bg-green-900/50 px-3 py-2 rounded-lg border border-green-700">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                 <div className="flex flex-col">
