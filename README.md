@@ -29,37 +29,45 @@ I went with Tauri (Rust + React) because I wanted something fast and native-feel
 
 ```
 gaming-time-tracker/
-├── src-tauri/                 # Rust backend
+├── src-tauri/                         # Rust backend
+│   ├── icons/                         # Icons
 │   ├── src/
-│   │   ├── main.rs           # Application entry point & Tauri commands
-│   │   ├── models.rs         # Data structures & types
-│   │   ├── game_monitor.rs   # Game detection & session tracking
-│   │   └── database.rs       # SQLite database operations
-│   └── Cargo.toml           # Rust dependencies
-├── src/                      # React frontend
+│   │   ├── main.rs                    # Application entry point & Tauri commands
+│   │   ├── models.rs                  # Data structures & types
+│   │   ├── game_monitor.rs            # Game detection & session tracking
+│   │   └── database.rs                # SQLite database operations
+│   ├── Cargo.toml                     # Rust dependencies
+│   └── tauri.conf.json                # Tauri configuration
+├── src/                               # React frontend
 │   ├── components/
-│   │   ├── Dashboard.tsx     # Main dashboard with budget & sessions
-│   │   ├── LearningTracker.tsx (planned)
-│   │   ├── SessionHistory.tsx # History tab with analytics (more coming soon!)
-│   │   └── SettingsPanel.tsx (planned)
-│   ├── App.tsx              # Root React component
-│   └── main.tsx             # React entry point
-├── tests/                   # Testing suite
+│   │   ├── Dashboard.tsx              # Main dashboard with budget & sessions
+│   │   ├── LearningTracker.tsx        (planned)
+│   │   ├── SessionHistory.tsx         # History tab with analytics (more coming soon!)
+│   │   └── SettingsPanel.tsx          (planned)
+│   ├── App.tsx                        # Root React component
+│   ├── index.css                      # CSS Styling
+│   └── main.tsx                       # React entry point
+├── tests/                             # Testing suite
 │   ├── mocks/
-│   │   └── tauri.ts         # Tauri API mocks for testing
+│   │   └── tauri.ts                   # Tauri API mocks for testing
 │   ├── components/
-│   │   ├── Dashboard.test.tsx # Dashboard component unit tests
-|   |   ├── LearningTracker.test.tsx (planned)
-│   │   ├── SessionHistory.test.tsx # Session History component unit tests
-│   │   └── SettingsPanel.test.tsx (planned)
+│   │   ├── Dashboard.test.tsx         # Dashboard component unit tests
+|   |   ├── LearningTracker.test.tsx   (planned)
+│   │   ├── SessionHistory.test.tsx    # Session History component unit tests
+│   │   └── SettingsPanel.test.tsx     (planned)
 │   ├── integration/
-│   │   ├── App.test.tsx     # App integration tests
-│   │   ├── utils.test.ts    # Utility function tests
-│   │   ├── integration.test.tsx # Full integration tests
-│   │   └── e2e.test.tsx     # End-to-end tests
-│   └── setup.ts             # Test configuration
-├── package.json             # Node.js dependencies
-└── vite.config.ts          # Vite configuration
+│   │   ├── App.test.tsx               # App integration tests
+│   │   ├── utils.test.ts              # Utility function tests
+│   │   ├── integration.test.tsx       # Full integration tests
+│   │   └── e2e.test.tsx               # End-to-end tests
+│   └── setup.ts                       # Test configuration
+├── index.html                         # Entry point
+├── package.json                       # Node.js dependencies
+├── postcss.config.js                  # PostCSS configuration
+├── tailwind.config.js                 # Tailwind configuration
+├── vite.config.ts                     # Vite configuration
+└── vitest.config.ts                   # Vitest configuration
+
 ```
 
 ## Key Features Explained
