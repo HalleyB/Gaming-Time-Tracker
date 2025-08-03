@@ -40,7 +40,7 @@ gaming-time-tracker/
 │   ├── components/
 │   │   ├── Dashboard.tsx     # Main dashboard with budget & sessions
 │   │   ├── LearningTracker.tsx (planned)
-│   │   ├── SessionHistory.tsx (planned)
+│   │   ├── SessionHistory.tsx # History tab with analytics (more coming soon!)
 │   │   └── SettingsPanel.tsx (planned)
 │   ├── App.tsx              # Root React component
 │   └── main.tsx             # React entry point
@@ -48,7 +48,10 @@ gaming-time-tracker/
 │   ├── mocks/
 │   │   └── tauri.ts         # Tauri API mocks for testing
 │   ├── components/
-│   │   └── Dashboard.test.tsx # Component unit tests
+│   │   ├── Dashboard.test.tsx # Dashboard component unit tests
+|   |   ├── LearningTracker.test.tsx (planned)
+│   │   ├── SessionHistory.test.tsx # Session History component unit tests
+│   │   └── SettingsPanel.test.tsx (planned)
 │   ├── integration/
 │   │   ├── App.test.tsx     # App integration tests
 │   │   ├── utils.test.ts    # Utility function tests
@@ -92,11 +95,12 @@ Encourages productive habits by offering gaming time rewards:
 - React dashboard that updates in real-time
 - Smart handling of multiple games running at once
 - Comprehensive test suite with unit, integration, and e2e tests
+- Detailed session history view (but going to add graphs soon!)
 
 ### 🚧 Still Working On
+- Graphs for session history
 - Learning activity tracking and rewards
 - Better interface for logging learning activities
-- Detailed session history view (right now it's pretty basic)
 - Settings panel so you can customize everything
 - System tray integration (so it's less in your face)
 - Per-game configuration options

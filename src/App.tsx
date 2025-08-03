@@ -17,7 +17,7 @@ import { formatDistanceToNow, format } from 'date-fns';
 
 import Dashboard from './components/Dashboard';
 // import LearningTracker from './components/LearningTracker';
-// import SessionHistory from './components/SessionHistory';
+import SessionHistory from './components/SessionHistory';
 // import SettingsPanel from './components/SettingsPanel';
 
 interface GameSession {
@@ -630,11 +630,10 @@ function App() {
           </div>
         )}
         {activeTab === 'history' && (
-          <div className="text-center py-20">
-            <Calendar className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-400 mb-2">Session History</h2>
-            <p className="text-gray-500">Coming soon...</p>
-          </div>
+          <SessionHistory
+            recentSessions={recentSessions}
+            formatDuration={formatDuration}
+          />
         )}
         {activeTab === 'settings' && (
           <div className="text-center py-20">

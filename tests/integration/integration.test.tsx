@@ -220,10 +220,10 @@ describe('Integration Tests', () => {
     const historyTab = screen.getByRole('button', { name: /History/i });
     await user.click(historyTab);
 
-    expect(screen.getByText('Session History')).toBeInTheDocument();
+    expect(screen.getByText('Stats Overview')).toBeInTheDocument();
 
     await waitFor(() => {
-      expect(screen.getByText('Session History')).toBeInTheDocument();
+      expect(screen.getByText('Stats Overview')).toBeInTheDocument();
     }, { timeout: 6000 });
   });
 

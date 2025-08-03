@@ -273,7 +273,7 @@ describe('End-to-End User Scenarios', () => {
       const tabs = [
         { name: 'Dashboard', expectedText: 'Current Session' },
         { name: 'Learning', expectedText: 'Learning Tracker' },
-        { name: 'History', expectedText: 'Session History' },
+        { name: 'History', expectedText: 'Stats Overview' },
         { name: 'Settings', expectedText: 'Settings' }
       ];
 
@@ -428,8 +428,7 @@ describe('End-to-End User Scenarios', () => {
       const historyTab = screen.getByRole('button', { name: /History/i });
       await user.click(historyTab);
 
-      expect(screen.getByText('Session History')).toBeInTheDocument();
-      expect(screen.getByText('Coming soon...')).toBeInTheDocument();
+      expect(screen.getByText('Stats Overview')).toBeInTheDocument();
     });
 
     it('calculates and displays weekly statistics', async () => {
